@@ -1,0 +1,55 @@
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  struct tnode {
+        int data;
+        struct tnode *left, *right;
+  };
+
+struct tnode *root = NULL;
+struct tnode * createNode(int data) {
+        struct tnode *newNode;
+        newNode  = (struct tnode *) malloc(sizeof(struct tnode));
+        newNode->data = data;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        return (newNode);
+ }
+void insertion(struct tnode **node, int data) 
+{
+        if (!*node) 
+	{
+                *node = createNode(data);
+        } 
+	else if (data < (*node)->data) 
+	{
+                insertion(&(*node)->left, data);
+        } 
+	else if (data > (*node)->data) 
+	{
+                insertion(&(*node)->right, data);
+        }
+  }
+void preOrder(struct tnode *node)
+ {
+        if (node) 
+	{
+                printf("%d  ", node->data);
+                preOrder(node->left);
+                preOrder(node->right);
+        }
+        return;
+  }
+int main() 
+{
+        int data, ch;
+	printf("Enter ur data:");
+	for(ch=0; ch<5; ch++)
+	{    
+		scanf("%d", &data);
+                insertion(&root, data);
+	}
+	 preOrder(root);
+         return 0;
+  }

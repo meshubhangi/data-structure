@@ -1,0 +1,42 @@
+ #include <stdio.h>
+  #include <stdlib.h>
+
+  struct treeNode {
+        int data;
+        struct treeNode *left, *right;
+  };
+
+  struct treeNode *root = NULL;
+
+struct treeNode* createNode(int data) {
+        struct treeNode *node;
+        node = (struct treeNode *)malloc(sizeof (struct treeNode));
+        node->data = data;
+        node->left = node->right = NULL;
+        return node;
+  }
+
+void insert(struct treeNode **myNode, int data) {
+        if (*myNode == NULL) {
+                *myNode = createNode(data);
+        } else if (data < (*myNode)->data) {
+                insert(&(*myNode)->left, data);
+        } else if (data > (*myNode)->data) {
+                insert(&(*myNode)->right, data);
+        }
+  }
+
+void searchAnElement(struct treeNode *myNode, int data) {
+        if (myNode == NULL) {
+                printf("Element not found in ur tree\n");
+        } else if (data < myNode->data) {
+                searchAnElement(myNode->left, data);
+        } else if (data > myNode->data) {
+                searchAnElement(myNode->right, data);
+        } else if (data == myNode->data) {
+                printf("I am present!!\n");
+        }
+  }
+
+         return 0;
+  }
