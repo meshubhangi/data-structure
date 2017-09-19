@@ -29,7 +29,6 @@ int push(char data)
 	{
 		top+=1;
 		arr[top]=data;
-		printf("\nITEM INSERTED\n\n");
 	}
 }
 int pop()
@@ -43,7 +42,6 @@ int pop()
 	{
 		data=arr[top];
 		top=top-1;
-		printf("\nITEM DELETED\n\n");
 	}
 	return data;
 }
@@ -136,6 +134,7 @@ int main()
 {
 	char exp[100];
 	int t;
+	printf("Enter the number of expressions to be converted");
 	scanf("%d",&t);
 	while(t--)
 	{
