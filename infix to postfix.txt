@@ -1,0 +1,148 @@
+#include<stdio.h>
+#include<string.h>
+char arr[50];
+char px[100];
+int top=-1;
+
+int isfull()
+{
+	if(top>=99)
+		return 1;
+	else 
+		return 0;
+}
+int isempty()
+{
+	if(top<=-1)
+		return 1;
+	else 
+		return 0;
+}
+int push(char data)
+{
+	if(isfull()==1)
+	{
+		printf("stack overflow\n\n");
+		return;
+	}
+	else
+	{
+		top+=1;
+		arr[top]=data;
+		printf("\nITEM INSERTED\n\n");
+	}
+}
+int pop()
+{
+	char data;
+	if(isempty()==1)
+	{
+		printf("stack underflow\n\n");
+	}
+	else
+	{
+		data=arr[top];
+		top=top-1;
+		printf("\nITEM DELETED\n\n");
+	}
+	return data;
+}
+int peek()
+{
+	return arr[top];
+}
+int precedence(char ch)
+{
+    switch (ch)
+    {
+    case '+':
+    case '-':
+        return 1;
+ 
+    case '*':
+    case '/':
+        return 2;
+ 
+    case '^':
+        return 3;
+    }
+}
+void checkexp(char e[])
+{
+	int i;
+	int p=0;
+	char t;
+	for(i=0;i<strlen(e);i++)
+	{
+		if(e[i]>='a' && e[i]<='z' || e[i]>='A' && e[i]<='Z')
+		{
+			px[p]=e[i];
+			p++;
+		}
+		else if(e[i]=='(')
+		{
+			push(e[i]);	
+		}
+		else if(e[i]=='+' || e[i]=='-' || e[i]=='*' || e[i]=='^' || e[i]=='/')
+		{
+			if(isempty())
+			{
+				push(e[i]);
+			}
+			else if(peek()=='(' || precedence(e[i])>precedence(peek()))
+			{
+				push(e[i]);
+			}
+			else
+			{
+				while(peek()!='(' && precedence(peek())>=precedence(e[i]))
+				{
+					t=pop();
+					px[p]=t;
+					p++;
+				}
+				push(e[i]);	
+			}
+		}
+		else if(e[i]==')')
+		{
+			while(peek()!='(')
+			{
+				t=pop();
+				px[p]=t;
+				p++;
+			}
+			t=pop();
+		}
+	}
+	if(isempty())
+	{
+		px[p]='\0';
+		printf("%s",px);
+	}
+	else
+	{
+		while(!isempty())
+		{
+			t=pop();
+			px[p]=t;
+			p++;
+		}
+		px[p]='\0';
+		printf("%s",px);
+	}
+}
+int main()
+{
+	char exp[100];
+	int t;
+	scanf("%d",&t);
+	while(t--)
+	{
+	printf("Enter the expression:");
+	scanf("%s",exp);
+	checkexp(exp);
+	printf("\n");
+	}
+}
+
